@@ -1,0 +1,272 @@
+[
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.QRCodeController",
+    "Method": "GenerateQRCode",
+    "RelativePath": "api/QRCode/GenerateQRCode",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "QRCodeText",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetAllFiles",
+    "RelativePath": "api/RcodeFiles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "AddFile",
+    "RelativePath": "api/RcodeFiles",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "addFileDto",
+        "Type": "QRFileTrackingapi.Models.AddRcodeFileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetFileById",
+    "RelativePath": "api/RcodeFiles/{rCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "UpdateFile",
+    "RelativePath": "api/RcodeFiles/{rCode}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCode",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateFileDto",
+        "Type": "QRFileTrackingapi.Models.UpdateRcodeFileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "DeleteFile",
+    "RelativePath": "api/RcodeFiles/{rCode}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetQRCode",
+    "RelativePath": "api/RcodeFiles/{rCode}/qr",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GenerateMultiQRCode",
+    "RelativePath": "api/RcodeFiles/generate-multi-qr",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCodes",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetFilesForLoggedInUser",
+    "RelativePath": "api/RcodeFiles/my-files",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "UpdateFiles",
+    "RelativePath": "api/RcodeFiles/update-multi-files",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "QRFileTrackingapi.Models.UpdateMultipleFilesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetUserByEpfNo",
+    "RelativePath": "api/UserAccounts/{epfNo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "epfNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/UserAccounts/all/{role}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "ApproveUser",
+    "RelativePath": "api/UserAccounts/approve/{epfNo}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "epfNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/UserAccounts/delete/{epfNo}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "epfNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "Login",
+    "RelativePath": "api/UserAccounts/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginDto",
+        "Type": "LoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "Register",
+    "RelativePath": "api/UserAccounts/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerDto",
+        "Type": "QRFileTrackingapi.Models.DTOs.RegisterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[QRFileTrackingapi.WeatherForecast, QRFileTrackingapi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]
