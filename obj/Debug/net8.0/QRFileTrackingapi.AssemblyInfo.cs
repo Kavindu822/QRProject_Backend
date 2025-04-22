@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5009c2ae0ec002e8f40252ce976af84dcec3b03")]
 [assembly: System.Reflection.AssemblyProductAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

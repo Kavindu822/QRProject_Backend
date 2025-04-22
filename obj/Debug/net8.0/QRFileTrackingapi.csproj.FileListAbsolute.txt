@@ -27,6 +27,7 @@ C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.Bcl.Memory.dll
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
@@ -174,6 +175,7 @@ C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\QRFileTrackingapi.csproj.CoreCompileInputs.cache
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\QRFileTrackingapi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\QRFileTrackingapi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\QRFileTrackingapi.sourcelink.json
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\scopedcss\bundle\QRFileTrackingapi.styles.css
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Kavindu\Desktop\QR Project api\QRFileTrackingapi\QRFileTrackingapi\obj\Debug\net8.0\staticwebassets.development.json

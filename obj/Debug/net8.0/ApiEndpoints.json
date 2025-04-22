@@ -35,7 +35,23 @@
     "Parameters": [
       {
         "Name": "addFileDto",
-        "Type": "QRFileTrackingapi.Models.AddRcodeFileDto",
+        "Type": "AddRcodeFileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "DeleteFiles",
+    "RelativePath": "api/RcodeFiles",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "rCodes",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": true
       }
     ],
@@ -72,7 +88,7 @@
       },
       {
         "Name": "updateFileDto",
-        "Type": "QRFileTrackingapi.Models.UpdateRcodeFileDto",
+        "Type": "UpdateRcodeFileDto",
         "IsRequired": true
       }
     ],
@@ -80,9 +96,9 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
-    "Method": "DeleteFile",
-    "RelativePath": "api/RcodeFiles/{rCode}",
-    "HttpMethod": "DELETE",
+    "Method": "GetFileHistory",
+    "RelativePath": "api/RcodeFiles/{rCode}/history",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -128,6 +144,16 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetAllFilesHistory",
+    "RelativePath": "api/RcodeFiles/history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
     "Method": "GetFilesForLoggedInUser",
     "RelativePath": "api/RcodeFiles/my-files",
     "HttpMethod": "GET",
@@ -138,7 +164,49 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
-    "Method": "UpdateFiles",
+    "Method": "GetMyHistory",
+    "RelativePath": "api/RcodeFiles/my-history",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "TransferFilesToEmployeeOrViaQR",
+    "RelativePath": "api/RcodeFiles/transfer-files-to-employee-or-via-qr",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateDto",
+        "Type": "QRFileTrackingapi.Models.UpdateMultipleFilesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "TransferMyFiles",
+    "RelativePath": "api/RcodeFiles/transfer-my-files",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transferAllDto",
+        "Type": "QRFileTrackingapi.Models.TransferAllFilesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "UpdateMultipleFiles",
     "RelativePath": "api/RcodeFiles/update-multi-files",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -154,15 +222,15 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
-    "Method": "GetUserByEpfNo",
-    "RelativePath": "api/UserAccounts/{epfNo}",
-    "HttpMethod": "GET",
+    "Method": "AdminResetPassword",
+    "RelativePath": "api/UserAccounts/admin-reset-password",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "epfNo",
-        "Type": "System.String",
+        "Name": "dto",
+        "Type": "QRFileTrackingapi.Controllers.UserAccountsController\u002BAdminResetPasswordDto",
         "IsRequired": true
       }
     ],
@@ -170,18 +238,12 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
-    "Method": "GetAllUsers",
-    "RelativePath": "api/UserAccounts/all/{role}",
+    "Method": "GetApprovedAdmins",
+    "RelativePath": "api/UserAccounts/admins",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "role",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -202,6 +264,16 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetAllApprovedEmployees",
+    "RelativePath": "api/UserAccounts/approved-employees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
     "Method": "DeleteUser",
     "RelativePath": "api/UserAccounts/delete/{epfNo}",
     "HttpMethod": "DELETE",
@@ -210,6 +282,32 @@
     "Parameters": [
       {
         "Name": "epfNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetEligibleSeatTransferUsers",
+    "RelativePath": "api/UserAccounts/eligible-seat-transfer-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetEmployeesByDepartment",
+    "RelativePath": "api/UserAccounts/employees-by-department/{department}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "department",
         "Type": "System.String",
         "IsRequired": true
       }
@@ -234,6 +332,16 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetNotApprovedUsers",
+    "RelativePath": "api/UserAccounts/not-approved-users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
     "Method": "Register",
     "RelativePath": "api/UserAccounts/register",
     "HttpMethod": "POST",
@@ -249,24 +357,19 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "QRFileTrackingapi.Controllers.WeatherForecastController",
-    "Method": "Get",
-    "RelativePath": "WeatherForecast",
-    "HttpMethod": "GET",
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "SetNewPassword",
+    "RelativePath": "api/UserAccounts/set-new-password-after-temp",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
+    "Parameters": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[QRFileTrackingapi.WeatherForecast, QRFileTrackingapi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "dto",
+        "Type": "QRFileTrackingapi.Controllers.UserAccountsController\u002BResetPasswordWithTempDto",
+        "IsRequired": true
       }
     ],
-    "EndpointName": "GetWeatherForecast"
+    "ReturnTypes": []
   }
 ]

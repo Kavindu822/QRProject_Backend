@@ -9,11 +9,11 @@ namespace QRFileTrackingapi.Models.Entities
         public string EpfNo { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string EName { get; set; }
 
-        public string Phone { get; set; }
-        public string Department { get; set; }
-        public string SeatNo { get; set; }
+        public string? ContactNo { get; set; }
+        public string? Department { get; set; }
+        public string? SeatNo { get; set; }
         public string Role { get; set; }
         public bool IsApproved { get; set; }
     }

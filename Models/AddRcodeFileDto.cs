@@ -1,14 +1,9 @@
-﻿namespace QRFileTrackingapi.Models
+﻿public class AddRcodeFileDto
 {
-    // AddFileDto.cs
-    public class AddRcodeFileDto
-    {
-        public required string Rcode { get; set; }
-        public required string EName { get; set; }
-        public required string EpfNo { get; set; }
-        public required string ContactNo { get; set; }
-        public required string Status { get; set; }
-        public required DateTime GetDate { get; set; }
-    }
-
+    public string Rcode { get; set; }
+    public string EName { get; set; }
+    public string EpfNo { get; set; }
+    public string ContactNo { get; set; }
+    public DateTime GetDate { get; set; }
+    public string Department { get; set; }  // Add department
 }

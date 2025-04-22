@@ -1,29 +1,29 @@
-﻿using QRFileTrackingapi.Models.Entities;
-using System;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-public class RcodeFile
+namespace QRFileTrackingapi.Models.Entities
 {
-    [Key]
-    [Required]
-    public string Rcode { get; set; }
+    public class RcodeFile
+    {
+        [Key]
+        public string Rcode { get; set; }
 
-    [Required]
-    [MaxLength(100)]
-    public string EName { get; set; }
+        [Required]
+        public string EName { get; set; }
 
-    [Required]
-    [MaxLength(20)]
-    public string EpfNo { get; set; }
+        [Required]
+        public string EpfNo { get; set; }
 
-    [Required]
-    [MaxLength(15)]
-    public string ContactNo { get; set; }
+        public string ContactNo { get; set; }
+        public string Status { get; set; }
 
-    [Required]
-    [MaxLength(20)]
-    public string Status { get; set; }
+        [Column(TypeName = "datetime2")]
+        public DateTime GetDate { get; set; }
 
-    [Required]
-    public DateTime GetDate { get; set; } = DateTime.UtcNow;
+        [Column(TypeName = "datetime2")]
+        public DateTime UpdateDate { get; set; }
+
+        // Add Department field
+        public string Department { get; set; }
+    }
 }
