@@ -128,6 +128,22 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "GetFilesByDepartment",
+    "RelativePath": "api/RcodeFiles/files-by-department/{userDepartment}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDepartment",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
     "Method": "GenerateMultiQRCode",
     "RelativePath": "api/RcodeFiles/generate-multi-qr",
     "HttpMethod": "POST",
@@ -332,12 +348,44 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
-    "Method": "GetNotApprovedUsers",
-    "RelativePath": "api/UserAccounts/not-approved-users",
+    "Method": "GetNotApprovedUsersByDepartment",
+    "RelativePath": "api/UserAccounts/not-approved-users-by-department/{department}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "department",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetProfile",
+    "RelativePath": "api/UserAccounts/profile",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.UserAccountsController",
+    "Method": "GetReceiveEmployees",
+    "RelativePath": "api/UserAccounts/receive-employees/{department}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "department",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

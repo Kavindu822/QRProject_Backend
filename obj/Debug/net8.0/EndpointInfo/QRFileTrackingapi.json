@@ -105,6 +105,28 @@
         }
       }
     },
+    "/api/RcodeFiles/files-by-department/{userDepartment}": {
+      "get": {
+        "tags": [
+          "RcodeFiles"
+        ],
+        "parameters": [
+          {
+            "name": "userDepartment",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/RcodeFiles/{rCode}": {
       "get": {
         "tags": [
@@ -507,6 +529,28 @@
         }
       }
     },
+    "/api/UserAccounts/receive-employees/{department}": {
+      "get": {
+        "tags": [
+          "UserAccounts"
+        ],
+        "parameters": [
+          {
+            "name": "department",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/UserAccounts/approved-employees": {
       "get": {
         "tags": [
@@ -531,10 +575,20 @@
         }
       }
     },
-    "/api/UserAccounts/not-approved-users": {
+    "/api/UserAccounts/not-approved-users-by-department/{department}": {
       "get": {
         "tags": [
           "UserAccounts"
+        ],
+        "parameters": [
+          {
+            "name": "department",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -606,6 +660,18 @@
       }
     },
     "/api/UserAccounts/eligible-seat-transfer-users": {
+      "get": {
+        "tags": [
+          "UserAccounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserAccounts/profile": {
       "get": {
         "tags": [
           "UserAccounts"

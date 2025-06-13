@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using QRFileTrackingapi.Models.DTOs;
@@ -33,39 +34,52 @@ namespace QRFileTrackingapi.Controllers
             this.config = config;
         }
 
-        // ✅ REGISTER USER
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
-        {
-            logger.LogInformation("User registration attempt - EPF No: {EpfNo}, Role: {Role}", registerDto.EpfNo, registerDto.Role);
+public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+{
+    logger.LogInformation("User registration attempt - EPF No: {EpfNo}, Role: {Role}", registerDto.EpfNo, registerDto.Role);
 
-            if (registerDto.Role != "Admin" && registerDto.Role != "Employee")
-                return BadRequest(new { message = "Invalid role. Must be 'Admin' or 'Employee'." });
+    if (registerDto.Role != "Admin" && registerDto.Role != "Employee")
+        return BadRequest(new { message = "Invalid role. Must be 'Admin' or 'Employee'." });
 
-            var existingUser = await userManager.FindByNameAsync(registerDto.EpfNo);
-            if (existingUser != null)
-                return BadRequest(new { message = "User already registered." });
+    var existingUser = await userManager.FindByNameAsync(registerDto.EpfNo);
+    if (existingUser != null)
+        return BadRequest(new { message = "User already registered." });
+
+            // ✅ Automatically approve if EPF number is "admin"
+            bool isApproved =
+                registerDto.EpfNo.Equals("admin-lanka", StringComparison.OrdinalIgnoreCase) ||
+                registerDto.EpfNo.Equals("admin-india", StringComparison.OrdinalIgnoreCase);
+
+
 
             var user = new UserAccount
-            {
-                UserName = registerDto.EpfNo,
-                EpfNo = registerDto.EpfNo,
-                EName = registerDto.EName,
-                ContactNo = registerDto.ContactNo,
-                Department = registerDto.Department,
-                SeatNo = registerDto.SeatNo,
-                Role = registerDto.Role,
-                IsApproved = false // Needs admin approval
-            };
+    {
+        UserName = registerDto.EpfNo,
+        EpfNo = registerDto.EpfNo,
+        EName = registerDto.EName,
+        ContactNo = registerDto.ContactNo,
+        Department = registerDto.Department,
+        SeatNo = registerDto.SeatNo,
+        Role = registerDto.Role,
+        IsApproved = isApproved // ✅ Set true for "admin"
+    };
 
-            var result = await userManager.CreateAsync(user, registerDto.Password);
-            if (!result.Succeeded)
-                return BadRequest(new { message = string.Join(", ", result.Errors.Select(e => e.Description)) });
+    var result = await userManager.CreateAsync(user, registerDto.Password);
+    if (!result.Succeeded)
+        return BadRequest(new { message = string.Join(", ", result.Errors.Select(e => e.Description)) });
 
-            await userManager.AddToRoleAsync(user, registerDto.Role);
-            logger.LogInformation("User registered successfully - EPF No: {EpfNo}", registerDto.EpfNo);
-            return Ok(new { message = "Registered successfully. Awaiting admin approval." });
-        }
+    await userManager.AddToRoleAsync(user, registerDto.Role);
+    logger.LogInformation("User registered successfully - EPF No: {EpfNo}", registerDto.EpfNo);
+
+    return Ok(new
+    {
+        message = isApproved
+            ? "Admin account registered and approved successfully."
+            : "Registered successfully. Awaiting admin approval."
+    });
+}
+
 
 
         // ✅ LOGIN
@@ -91,8 +105,9 @@ namespace QRFileTrackingapi.Controllers
         new Claim("EpfNo", user.EpfNo),
         new Claim("IsApproved", user.IsApproved.ToString()),
         new Claim(ClaimTypes.Role, user.Role),
-        new Claim("ContactNo", user.ContactNo),  // Add contactNo as a claim
-        new Claim("EName", user.EName)  // Add eName as a claim
+        new Claim("ContactNo", user.ContactNo),
+        new Claim("EName", user.EName),
+        new Claim("Department", user.Department) // ✅ Add this line
     };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]));
@@ -101,13 +116,14 @@ namespace QRFileTrackingapi.Controllers
             var token = new JwtSecurityToken(
                 issuer: config["Jwt:Issuer"],
                 audience: config["Jwt:Audience"],
-                claims: claims,  // Include all the claims
+                claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
 
 
@@ -136,28 +152,73 @@ namespace QRFileTrackingapi.Controllers
             return Ok(new { message = "User deleted successfully." });
         }
 
-        // ✅ GET APPROVED EMPLOYEES BY DEPARTMENT (Admin Only)
-        //[Authorize(Roles = "Admin")]
-        [HttpGet("employees-by-department/{department}")]
-        public IActionResult GetEmployeesByDepartment(string department)
-        {
-            var employees = userManager.Users
-                .Where(u => u.Role == "Employee" && u.Department == department && u.IsApproved == true)
-                .Select(u => new
+            //[Authorize(Roles = "Admin")]
+            [HttpGet("employees-by-department/{department}")]
+            public IActionResult GetEmployeesByDepartment(string department)
+            {
+                List<UserAccount> employees;
+
+                if (department == "Dyeing-India")
+                {
+                    // Return only employees belonging to Dyeing-India
+                    employees = userManager.Users
+                        .Where(u => u.Role == "Employee" && u.Department == "Dyeing-India" && u.IsApproved == true)
+                        .ToList();
+                }
+                else if (department == "Dyeing-Lanka")
+                {
+                    // Return employees of sub-departments Dyeing-Lanka and Quality-Lanka
+                    employees = userManager.Users
+                         .Where(u => u.Role == "Employee" && u.Department == "Dyeing-Lanka" && u.IsApproved == true)
+                         .ToList();
+                }
+                else
+                {
+                    employees = userManager.Users
+                   .Where(u => u.Role == "Employee" && u.Department == "Quality-Lanka" && u.IsApproved == true)
+                   .ToList();
+                }
+
+                var result = employees.Select(u => new
                 {
                     u.EpfNo,
                     u.EName,
                     u.ContactNo,
-                    u.Department,
-                    u.SeatNo,
-                    u.IsApproved
-                })
-                .ToList();
+                    u.Department
+                });
 
-            if (!employees.Any())
-                return NotFound(new { message = $"No approved employees found in department '{department}'." });
+                return Ok(result);
+            }
 
-            return Ok(employees);
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("receive-employees/{department}")]
+        public IActionResult GetReceiveEmployees(string department)
+        {
+            List<UserAccount> employees;
+
+            if (department == "Dyeing-India")
+            {
+                // Return only employees belonging to Dyeing-India
+                employees = userManager.Users
+                    .Where(u => u.Role == "Employee" && u.Department == "Dyeing-India" && u.IsApproved == true)
+                    .ToList();
+            }
+            else {
+                // Return employees of sub-departments Dyeing-Lanka and Quality-Lanka
+                employees = userManager.Users
+                     .Where(u => u.Role == "Employee" && (u.Department == "Dyeing-Lanka" || u.Department == "Quality-Lanka") && u.IsApproved == true)
+                     .ToList();
+            }
+
+            var result = employees.Select(u => new
+            {
+                u.EpfNo,
+                u.EName,
+                u.ContactNo,
+                u.Department
+            });
+
+            return Ok(result);
         }
 
         //[Authorize(Roles = "Admin")]
@@ -183,54 +244,87 @@ namespace QRFileTrackingapi.Controllers
             return Ok(employees);
         }
 
-
-
-
-        // ✅ GET APPROVED ADMINS ONLY (Admin Only)
         [Authorize(Roles = "Admin")]
         [HttpGet("admins")]
         public IActionResult GetApprovedAdmins()
         {
+            // Get EPF number from JWT
+            var epfNo = User?.Identity?.Name;
+            if (string.IsNullOrEmpty(epfNo))
+                return Unauthorized(new { message = "Invalid user." });
+
+            // Get the current user
+            var currentUser = userManager.Users.FirstOrDefault(u => u.EpfNo == epfNo);
+            if (currentUser == null)
+                return NotFound(new { message = "User not found." });
+
+            var userDept = currentUser.Department?.Trim();
+
+            // Pull data into memory before using null-checks or .Trim()
             var admins = userManager.Users
-                .Where(u => u.Role == "Admin" && u.IsApproved == true)  // Compare with true
+                .ToList() // Avoid expression tree restrictions
+                .Where(u =>
+                    u.Role == "Admin" &&
+                    u.IsApproved == true &&
+                    !string.IsNullOrEmpty(u.Department) &&
+                    u.Department.Trim().Equals(userDept, StringComparison.OrdinalIgnoreCase)
+                )
                 .Select(u => new
                 {
                     u.EpfNo,
                     u.EName,
                     u.ContactNo,
-                    u.Department,
+                    Department = u.Department.Trim(),
                     u.SeatNo,
                     u.IsApproved
                 })
                 .ToList();
 
             if (!admins.Any())
-                return NotFound(new { message = "No approved admins found." });
+                return NotFound(new { message = "No approved admins found in your department." });
 
             return Ok(admins);
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("not-approved-users")]
-        public IActionResult GetNotApprovedUsers()
+
+
+        
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("not-approved-users-by-department/{department}")]
+        public IActionResult GetNotApprovedUsersByDepartment(string department)
         {
-            var notApprovedUsers = userManager.Users
-                .Where(u => u.IsApproved == false)
-                .Select(u => new
-                {
-                    u.EName,
-                    u.EpfNo,
-                    u.Role,
-                    u.ContactNo,
-                    u.Department
-                })
-                .ToList();
+            List<UserAccount> notApprovedUsers;
+
+            if (department == "Dyeing-India")
+            {
+                // Not approved users only from Dyeing-India
+                notApprovedUsers = userManager.Users
+                    .Where(u => !u.IsApproved && u.Department == "Dyeing-India")
+                    .ToList();
+            }
+            else
+            {
+                // Not approved users from Dyeing-Lanka or Quality-Lanka
+                notApprovedUsers = userManager.Users
+                    .Where(u => !u.IsApproved && (u.Department == "Dyeing-Lanka" || u.Department == "Quality-Lanka"))
+                    .ToList();
+            }
 
             if (!notApprovedUsers.Any())
-                return NotFound(new { message = "No unapproved users found." });
+                return NotFound(new { message = $"No unapproved users found for department '{department}'." });
 
-            return Ok(notApprovedUsers);
+            var result = notApprovedUsers.Select(u => new
+            {
+                u.EName,
+                u.EpfNo,
+                u.Role,
+                u.ContactNo,
+                u.Department
+            }).ToList();
+
+            return Ok(result);
         }
+
 
         //[Authorize(Roles = "Admin")]
         [HttpPost("admin-reset-password")]
@@ -316,19 +410,40 @@ namespace QRFileTrackingapi.Controllers
                 })
                 .ToList();
 
-            //// Add the "Library" manually
-            //eligibleUsers.Add(new
-            //{
-            //    EpfNo = "Library",
-            //    EName = "Library",
-            //    ContactNo = "N/A"
-            //});
-
             return Ok(eligibleUsers);
         }
 
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
+        {
+            var epfNo = User?.Identity?.Name;
 
+            if (string.IsNullOrEmpty(epfNo))
+            {
+                return Unauthorized("Invalid token.");
+            }
 
+            var user = await userManager.Users
+                .Where(u => u.EpfNo == epfNo)
+                .Select(u => new
+                {
+                    u.EpfNo,
+                    u.EName,
+                    u.Email,
+                    u.ContactNo,
+                    u.Department,
+                    u.Role,
+                    u.IsApproved
+                })
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            return Ok(user);
+        }
 
     }
 }

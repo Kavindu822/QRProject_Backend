@@ -32,6 +32,35 @@ namespace QRFileTrackingapi.Controllers
             return Ok(allFiles);
         }
 
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("files-by-department/{userDepartment}")]
+        public async Task<IActionResult> GetFilesByDepartment(string userDepartment)
+        {
+            List<RcodeFile> files;
+
+            if (userDepartment == "Dyeing-India")
+            {
+                // Return only files belonging to Dyeing-India
+                files = await dbContext.RcodeFiles
+                    .Where(f => f.Department == "Dyeing-India")
+                    .ToListAsync();
+            }
+            else
+            {
+                // Return files of sub-departments for other departments
+                files = await dbContext.RcodeFiles
+                    .Where(f => f.Department == "Dyeing-Lanka" || f.Department == "Quality-Lanka")
+                    .ToListAsync();
+            }
+
+            if (!files.Any())
+                return NotFound(new { message = $"No files found for department '{userDepartment}'." });
+
+            return Ok(files);
+        }
+
+
+
         // Get file by Rcode
         [HttpGet("{rCode}")]
         public async Task<IActionResult> GetFileById(string rCode)
@@ -64,6 +93,21 @@ namespace QRFileTrackingapi.Controllers
         [HttpGet("history")]
         public async Task<IActionResult> GetAllFilesHistory()
         {
+            var sixMonthsAgo = DateTime.UtcNow.AddMonths(-6);
+
+            // 1. Get all history records older than 6 months
+            var oldHistories = await dbContext.RcodeFilesHistories
+                .Where(h => h.TransferDate < sixMonthsAgo)
+                .ToListAsync();
+
+            // 2. Remove them if any exist
+            if (oldHistories.Any())
+            {
+                dbContext.RcodeFilesHistories.RemoveRange(oldHistories);
+                await dbContext.SaveChangesAsync();
+            }
+
+            // 3. Return the remaining (latest) histories
             var history = await dbContext.RcodeFilesHistories
                 .OrderByDescending(h => h.TransferDate)
                 .ToListAsync();
@@ -75,6 +119,7 @@ namespace QRFileTrackingapi.Controllers
 
             return Ok(history);
         }
+
 
         [Authorize(Roles = "Employee")]
         [HttpGet("my-history")]
@@ -139,7 +184,7 @@ namespace QRFileTrackingapi.Controllers
                 PngByteQRCode qrCode = new PngByteQRCode(qrCodeData);
 
                 byte[] qrCodeBytes = qrCode.GetGraphic(20);
-                return File(qrCodeBytes, "image/png"); // Return as PNG image
+                return File(qrCodeBytes, "image/png", $"QRCode_{file.Rcode}.png"); // Return as PNG image
             }
             catch (Exception ex)
             {

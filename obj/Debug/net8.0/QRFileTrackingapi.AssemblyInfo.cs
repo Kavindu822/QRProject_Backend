@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1854d8f20cc914ca87fee64dec4e2d2267652bdb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fc7e8d0873fb8f208a6e1b23266a1cfe746c152")]
 [assembly: System.Reflection.AssemblyProductAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QRFileTrackingapi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
