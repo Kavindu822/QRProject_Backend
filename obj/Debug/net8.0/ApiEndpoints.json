@@ -59,22 +59,6 @@
   },
   {
     "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
-    "Method": "GetFileById",
-    "RelativePath": "api/RcodeFiles/{rCode}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "rCode",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
     "Method": "UpdateFile",
     "RelativePath": "api/RcodeFiles/{rCode}",
     "HttpMethod": "PUT",
@@ -89,22 +73,6 @@
       {
         "Name": "updateFileDto",
         "Type": "UpdateRcodeFileDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
-    "Method": "GetFileHistory",
-    "RelativePath": "api/RcodeFiles/{rCode}/history",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "rCode",
-        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -186,6 +154,38 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "SearchFileHistory",
+    "RelativePath": "api/RcodeFiles/search-history/{query}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "QRFileTrackingapi.Controllers.RcodeFilesController",
+    "Method": "SearchFilesByRcode",
+    "RelativePath": "api/RcodeFiles/search/{query}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "query",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

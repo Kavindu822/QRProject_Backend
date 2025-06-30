@@ -127,14 +127,14 @@
         }
       }
     },
-    "/api/RcodeFiles/{rCode}": {
+    "/api/RcodeFiles/search/{query}": {
       "get": {
         "tags": [
           "RcodeFiles"
         ],
         "parameters": [
           {
-            "name": "rCode",
+            "name": "query",
             "in": "path",
             "required": true,
             "schema": {
@@ -142,45 +142,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "RcodeFiles"
-        ],
-        "parameters": [
-          {
-            "name": "rCode",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRcodeFileDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRcodeFileDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateRcodeFileDto"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -188,14 +149,14 @@
         }
       }
     },
-    "/api/RcodeFiles/{rCode}/history": {
+    "/api/RcodeFiles/search-history/{query}": {
       "get": {
         "tags": [
           "RcodeFiles"
         ],
         "parameters": [
           {
-            "name": "rCode",
+            "name": "query",
             "in": "path",
             "required": true,
             "schema": {
@@ -261,6 +222,47 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/RcodeFiles/{rCode}": {
+      "put": {
+        "tags": [
+          "RcodeFiles"
+        ],
+        "parameters": [
+          {
+            "name": "rCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRcodeFileDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRcodeFileDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRcodeFileDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
